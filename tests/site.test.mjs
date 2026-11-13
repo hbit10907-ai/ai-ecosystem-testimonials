@@ -12,10 +12,23 @@ test('home page introduces original features and links to preserved testimonials
     assert.ok(home.includes(label), `Missing home feature ${label}`);
   }
   assert.match(home, /href="\.\/testimonials\.html"/);
+  assert.match(home, /href="\.\/features\.html"/);
   assert.match(home, /人物照片為 AI 示意，非受訪者本人/);
   assert.match(testimonialsPage, /id="testimonial-grid"/);
   assert.match(testimonialsPage, /src="\.\/app\.mjs"/);
   assert.match(testimonialsPage, /href="\.\/"/);
+  assert.match(testimonialsPage, /href="\.\/features\.html"/);
+});
+
+test('feature introduction preserves the source topics and two videos', () => {
+  const featuresPage = readFileSync(resolve(root, 'features.html'), 'utf8');
+  assert.ok(existsSync(resolve(root, 'features.css')));
+  for (const label of ['百萬潛買', '通知功能', '開發功能', '相鄰土地', '每日新物件']) {
+    assert.ok(featuresPage.includes(label), `Missing feature topic ${label}`);
+  }
+  assert.match(featuresPage, /youtube-nocookie\.com\/embed\/2i63W2J-ybE/);
+  assert.match(featuresPage, /youtube-nocookie\.com\/embed\/aMQRHQNJm1A/);
+  assert.match(featuresPage, /href="\.\/testimonials\.html"/);
 });
 
 test('the source testimonials are complete and have local distinct portraits', async () => {
