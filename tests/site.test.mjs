@@ -1,9 +1,22 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { existsSync } from 'node:fs';
+import { existsSync, readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 
 const root = resolve(import.meta.dirname, '..');
+
+test('home page introduces original features and links to preserved testimonials', () => {
+  const home = readFileSync(resolve(root, 'index.html'), 'utf8');
+  const testimonialsPage = readFileSync(resolve(root, 'testimonials.html'), 'utf8');
+  for (const label of ['土地開發', '建物開發', '百萬潛買', '官網留單', '新進五大案', '最新降價通知', '專任委託通知']) {
+    assert.ok(home.includes(label), `Missing home feature ${label}`);
+  }
+  assert.match(home, /href="\.\/testimonials\.html"/);
+  assert.match(home, /人物照片為 AI 示意，非受訪者本人/);
+  assert.match(testimonialsPage, /id="testimonial-grid"/);
+  assert.match(testimonialsPage, /src="\.\/app\.mjs"/);
+  assert.match(testimonialsPage, /href="\.\/"/);
+});
 
 test('the source testimonials are complete and have local distinct portraits', async () => {
   assert.ok(existsSync(resolve(root, 'data.mjs')));
