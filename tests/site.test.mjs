@@ -24,12 +24,25 @@ test('home download section uses local QR images and the requested links', () =>
   const home = readFileSync(resolve(root, 'index.html'), 'utf8');
   assert.match(home, /href="#download">前往官方下載頁/);
   assert.match(home, /<section id="download"[^>]*aria-labelledby="support-title"/);
-  assert.match(home, /href="#">查看收費模式<\/a>/);
+  assert.match(home, /href="\.\/pricing\.html">查看收費模式<\/a>/);
   assert.doesNotMatch(home, /原始官方網站/);
   for (const image of ['assets/download/ios-qr.png', 'assets/download/android-qr.png']) {
     assert.ok(existsSync(resolve(root, image)), `Missing ${image}`);
     assert.ok(home.includes(`./${image}`));
   }
+});
+
+test('pricing page shows the requested functions and only the selected tier', () => {
+  const pricing = readFileSync(resolve(root, 'pricing.html'), 'utf8');
+  assert.ok(existsSync(resolve(root, 'pricing.css')));
+  for (const item of ['市售建物物件查找', '市售建物物件可能地址比對', '查看謄本資料', '每日訂閱條件：新物件上架推播通知', '貼網址比對物件', 'e小神通 LINE 簡易查詢功能', '地圖定位查找附近市售物件', '市售土地物件查找', '市售土地物件可能地號比對', '土地新物件上架推播通知', '土地圖台運用', '地圖定位查找附近土地資訊', '查詢全台建物、土地謄本雲資料', '查詢全台建物、土地共享雲謄本資料']) {
+    assert.ok(pricing.includes(item), `Missing paid function: ${item}`);
+  }
+  for (const price of ['11～15 人', '125,820', '36,000', '41,940', '5,000']) {
+    assert.ok(pricing.includes(price), `Missing price: ${price}`);
+  }
+  assert.doesNotMatch(pricing, /<iframe\b|<video\b/);
+  assert.doesNotMatch(pricing, /7～10 人|16～20 人/);
 });
 
 test('feature introduction preserves the source topics and two videos', () => {
