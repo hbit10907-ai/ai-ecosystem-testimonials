@@ -35,7 +35,7 @@ test('home download section uses local QR images and the requested links', () =>
 test('pricing page shows the requested functions and only the selected tier', () => {
   const pricing = readFileSync(resolve(root, 'pricing.html'), 'utf8');
   assert.ok(existsSync(resolve(root, 'pricing.css')));
-  for (const item of ['市售建物物件查找', '市售建物物件可能地址比對', '查看謄本資料', '每日訂閱條件：新物件上架推播通知', '貼網址比對物件', 'e小神通 LINE 簡易查詢功能', '地圖定位查找附近市售物件', '市售土地物件查找', '市售土地物件可能地號比對', '土地新物件上架推播通知', '土地圖台運用', '地圖定位查找附近土地資訊', '查詢全台建物、土地謄本雲資料', '查詢全台建物、土地共享雲謄本資料']) {
+  for (const item of ['市售建物物件查找', '市售建物物件可能地址比對', '查看謄本資料', '每日訂閱條件：新物件上架推播通知', '貼網址比對物件', 'e小神通 LINE 簡易查詢功能', '地圖定位查找附近市售物件', '市售土地物件查找', '市售土地物件可能地號比對', '土地新物件上架推播通知', '土地圖台運用', '地圖定位查找附近土地資訊', '查詢全台建物、土地謄本雲資料(共2,500多筆)', '查詢全台新調閱、土地共享雲謄本資料(新調已74萬筆，持續增加中)']) {
     assert.ok(pricing.includes(item), `Missing paid function: ${item}`);
   }
   for (const price of ['11～15 人', '125,820', '36,000', '41,940', '5,000']) {
@@ -43,6 +43,9 @@ test('pricing page shows the requested functions and only the selected tier', ()
   }
   assert.doesNotMatch(pricing, /<iframe\b|<video\b/);
   assert.doesNotMatch(pricing, /7～10 人|16～20 人/);
+  for (const copy of ['根據人員級距進行收費、收費後功能皆能使用，', '同業採取各模組分開計費，售價推疊。', '下列為付費使用功能介紹說明', '其他人數間距及早鳥補助優惠，請洽各區顧問師。']) {
+    assert.ok(pricing.includes(copy), `Missing pricing copy: ${copy}`);
+  }
 });
 
 test('feature introduction preserves the source topics and two videos', () => {

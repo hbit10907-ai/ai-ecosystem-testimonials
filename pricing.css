@@ -4,6 +4,7 @@
 .pricing-hero h1, .pricing-section-heading h2 { margin: 0; color: var(--forest-deep); font-family: Georgia, "Noto Serif TC", "Microsoft JhengHei", serif; font-weight: 700; letter-spacing: .035em; line-height: 1.32; }
 .pricing-hero h1 { font-size: clamp(43px, 4.6vw, 67px); }
 .pricing-hero-copy > p:not(.section-label) { max-width: 600px; margin: 23px 0 0; color: #4c5f51; font-size: clamp(16px, 1.35vw, 19px); line-height: 1.9; }
+.pricing-hero-callout { max-width: 600px; margin: 7px 0 0; color: var(--forest); font-size: clamp(19px, 1.8vw, 24px); font-weight: 700; line-height: 1.6; }
 .pricing-hero-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 18px 28px; margin-top: 34px; }
 .pricing-hero-panel { padding: 30px clamp(25px, 3vw, 43px) 18px; border-radius: 12px; background: var(--forest); color: #fff; box-shadow: 0 22px 55px rgba(18, 60, 39, .15); }
 .pricing-panel-label { display: block; padding-bottom: 18px; color: #c9dfc8; font-size: 13px; font-weight: 800; letter-spacing: .18em; }
