@@ -20,6 +20,18 @@ test('home page introduces original features and links to preserved testimonials
   assert.match(testimonialsPage, /href="\.\/features\.html"/);
 });
 
+test('home download section uses local QR images and the requested links', () => {
+  const home = readFileSync(resolve(root, 'index.html'), 'utf8');
+  assert.match(home, /href="#download">前往官方下載頁/);
+  assert.match(home, /<section id="download"[^>]*aria-labelledby="support-title"/);
+  assert.match(home, /href="#">查看收費模式<\/a>/);
+  assert.doesNotMatch(home, /原始官方網站/);
+  for (const image of ['assets/download/ios-qr.png', 'assets/download/android-qr.png']) {
+    assert.ok(existsSync(resolve(root, image)), `Missing ${image}`);
+    assert.ok(home.includes(`./${image}`));
+  }
+});
+
 test('feature introduction preserves the source topics and two videos', () => {
   const featuresPage = readFileSync(resolve(root, 'features.html'), 'utf8');
   assert.ok(existsSync(resolve(root, 'features.css')));
